@@ -3,7 +3,10 @@ import React from "react";
 import { BsHouseDoor } from "react-icons/bs";
 import { GoPeople, GoGear } from "react-icons/go";
 import { FaArrowsDownToPeople } from "react-icons/fa6";
+import { IoMdListBox } from "react-icons/io";
 import { GiWoodCabin, GiWoodPile } from "react-icons/gi";
+import NavItem from "./NavItem";
+import { Button } from "@mui/material";
 
 export default function Sidemenu() {
   return (
@@ -16,21 +19,30 @@ export default function Sidemenu() {
         <nav>
           <div className="text-lg">Employees</div>
           <ul className="pl-2 mt-2">
-            <li className="flex gap-2 items-center ">
-              <GoPeople /> Overview
-            </li>
-            <li className="flex gap-2 items-center ">
-              <FaArrowsDownToPeople /> Attendance
-            </li>
+            <NavItem href="/dashboard/employees" icon={<GoPeople />}>
+              Overview
+            </NavItem>
+            <NavItem
+              href="/dashboard/employees/attendance"
+              icon={<FaArrowsDownToPeople />}
+            >
+              Attendance
+            </NavItem>
           </ul>
           <div className="text-lg mt-5">Projects</div>
           <ul className="pl-2 mt-2">
-            <li className="flex gap-2 items-center ">
-              <GiWoodCabin /> Overview
-            </li>
-            <li className="flex gap-2 items-center ">
-              <GiWoodPile /> Materials
-            </li>
+            <NavItem href="/dashboard/projects" icon={<GiWoodCabin />}>
+              Overview
+            </NavItem>
+            <NavItem href="/dashboard/projects/materials" icon={<GiWoodPile />}>
+              Project Materials
+            </NavItem>
+          </ul>
+          <div className="text-lg mt-5">Materials</div>
+          <ul className="pl-2 mt-2">
+            <NavItem href="/dashboard/materials" icon={<IoMdListBox />}>
+              List
+            </NavItem>
           </ul>
         </nav>
       </div>
@@ -41,13 +53,9 @@ export default function Sidemenu() {
             await signOut();
           }}
         >
-          <button
-            type="submit"
-            className=" border-black border-2 px-4 py-2 rounded-lg font-semibold hover:bg-black hover:text-white flex text-sm items-center gap-2"
-          >
-            <GoGear />
+          <Button startIcon={<GoGear />} type="submit">
             Logout
-          </button>
+          </Button>
         </form>
       </div>
     </div>

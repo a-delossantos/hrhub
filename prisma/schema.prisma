@@ -77,3 +77,30 @@ model Authenticator {
 
   @@id([userId, credentialID])
 }
+
+model Material {
+  id              Int               @id @default(autoincrement())
+  name            String
+  category        String
+  material_id     String            @unique
+  projectMaterial ProjectMaterial[]
+}
+
+model Project {
+  id              Int               @id @default(autoincrement())
+  address         String
+  alias           String?
+  owner_name      String?
+  projectMaterial ProjectMaterial[]
+  startDate       DateTime?
+}
+
+model ProjectMaterial {
+  id         Int      @id @default(autoincrement())
+  material   Material @relation(fields: [materialId], references: [id])
+  price      Int
+  project    Project  @relation(fields: [projectId], references: [id])
+  materialId Int
+  projectId  Int
+  date       DateTime @default(now())
+}
