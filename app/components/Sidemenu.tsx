@@ -6,46 +6,46 @@ import { FaArrowsDownToPeople } from "react-icons/fa6";
 import { IoMdListBox } from "react-icons/io";
 import { GiWoodCabin, GiWoodPile } from "react-icons/gi";
 import NavItem from "./NavItem";
-import { Button } from "@mui/material";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Sidemenu() {
   return (
-    <div className="w-56 p-4 flex flex-col justify-between">
+    <div className="w-56 p-4  flex-col justify-between hidden lg:flex">
       <div>
-        <h1 className="text-2xl font-bold mb-10 flex gap-2 items-center">
-          <BsHouseDoor />
-          First Asia
-        </h1>
-        <nav>
-          <div className="text-lg">Employees</div>
-          <ul className="pl-2 mt-2">
-            <NavItem href="/dashboard/employees" icon={<GoPeople />}>
-              Overview
-            </NavItem>
-            <NavItem
-              href="/dashboard/employees/attendance"
-              icon={<FaArrowsDownToPeople />}
-            >
-              Attendance
-            </NavItem>
-          </ul>
-          <div className="text-lg mt-5">Projects</div>
-          <ul className="pl-2 mt-2">
-            <NavItem href="/dashboard/projects" icon={<GiWoodCabin />}>
-              Overview
-            </NavItem>
-            <NavItem href="/dashboard/projects/materials" icon={<GiWoodPile />}>
-              Project Materials
-            </NavItem>
-          </ul>
-          <div className="text-lg mt-5">Materials</div>
-          <ul className="pl-2 mt-2">
-            <NavItem href="/dashboard/materials" icon={<IoMdListBox />}>
-              List
-            </NavItem>
-          </ul>
-        </nav>
+        <Image
+          src={"/faec-colored.png"}
+          width={150}
+          height={100}
+          alt="logo"
+          className="mb-10"
+        />
+        <div>
+          <div>
+            <p className="text-sm font-semibold">Employees</p>
+            <ul>
+              <NavItem href={"/dashboard"} icon={<FaArrowsDownToPeople />}>
+                Dashboard
+              </NavItem>
+              <NavItem href={"/attendance"} icon={<GoPeople />}>
+                Attendance
+              </NavItem>
+            </ul>
+          </div>
+          <div className="mt-6">
+            <p className="text-sm font-semibold">Materials</p>
+            <ul>
+              <NavItem href={"/dashboard/materials"} icon={<GiWoodCabin />}>
+                Dashboard
+              </NavItem>
+              <NavItem href={"/attendance"} icon={<GiWoodPile />}>
+                Attendance
+              </NavItem>
+            </ul>
+          </div>
+        </div>
       </div>
+
       <div>
         <form
           action={async () => {
@@ -53,8 +53,9 @@ export default function Sidemenu() {
             await signOut();
           }}
         >
-          <Button startIcon={<GoGear />} type="submit">
-            Logout
+          <Button variant={"outline"} className="w-full" type={"submit"}>
+            <GoGear className="mr-2 h-4 w-4" />
+            Sign out
           </Button>
         </form>
       </div>

@@ -78,12 +78,22 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
+model Supplier {
+  id       Int        @id @default(autoincrement())
+  name     String
+  contact  String?
+  address  String?
+  Material Material[]
+}
+
 model Material {
   id              Int               @id @default(autoincrement())
   name            String
   category        String
   material_id     String            @unique
   projectMaterial ProjectMaterial[]
+  supplier        Supplier          @relation(fields: [supplierId], references: [id])
+  supplierId      Int
 }
 
 model Project {

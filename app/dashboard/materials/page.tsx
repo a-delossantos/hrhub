@@ -2,7 +2,7 @@
 import AddMaterial from "@/app/modals/AddMaterial";
 import { Material } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { IoMdAdd } from "react-icons/io";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,7 +10,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
+import Supplier from "@/app/components/Supplier";
+import SupplierTable from "@/app/components/SupplierTable";
 
 export default function MaterialsPage() {
   const [showMaterialModal, setShowMaterialModal] = useState(false);
@@ -25,14 +26,22 @@ export default function MaterialsPage() {
   return (
     <div className="relative min-h-full">
       <div>
-        <Button
+        <h2 className="text-lg mb-4 uppercase">Suppliers</h2>
+        <div>
+          <Supplier />
+          <SupplierTable />
+        </div>
+      </div>
+
+      <div>
+        {/* <Button
           variant="outlined"
           startIcon={<IoMdAdd />}
           onClick={() => setShowMaterialModal(true)}
           size="small"
         >
           Add Material
-        </Button>
+        </Button> */}
       </div>
 
       <div className="mt-6">

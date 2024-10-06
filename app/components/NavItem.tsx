@@ -16,9 +16,9 @@ export default function NavItem({ href, icon, children }: NavItemProps) {
     <li>
       <Link
         href={href}
-        className={`flex gap-2 items-center px-2 py-1 ${
+        className={`flex gap-2 items-center px-2 py-1 text-sm mt-1 ${
           isActive
-            ? "bg-gray-950 text-white rounded-md"
+            ? "bg-gray-300 text-black rounded-md"
             : "hover:bg-zinc-300 rounded-md"
         }`}
       >

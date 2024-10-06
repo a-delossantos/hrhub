@@ -1,7 +1,8 @@
 "use client";
 import AddProject from "@/app/modals/AddProject";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { BsHouseAdd } from "react-icons/bs";
 
 export default function ProjectPage() {
@@ -10,11 +11,11 @@ export default function ProjectPage() {
     <div className="relative min-h-full">
       <div>
         <Button
-          variant="outlined"
-          startIcon={<BsHouseAdd />}
-          size="small"
+          variant="default"
+          className="gap-2"
           onClick={() => setShowModal(true)}
         >
+          <BsHouseAdd />
           New Project
         </Button>
       </div>
