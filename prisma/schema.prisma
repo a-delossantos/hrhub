@@ -80,7 +80,7 @@ model Authenticator {
 
 model Supplier {
   id       Int        @id @default(autoincrement())
-  name     String
+  name     String     @unique
   contact  String?
   address  String?
   Material Material[]

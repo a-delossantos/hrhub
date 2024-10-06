@@ -1,6 +1,4 @@
-"use client";
 import { Button } from "@/components/ui/button";
-import { IoMdAdd } from "react-icons/io";
 import { SquarePlus } from "lucide-react";
 import {
   Drawer,
@@ -25,42 +23,57 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useEffect, useState } from "react";
+import { Supplier } from "@prisma/client";
+import { materialsCategories } from "../lib/contants";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
-  contact: z.string().min(2).max(50),
-  address: z.string().min(2).max(200),
+  category: z.string().min(2).max(50),
+  supplier: z.string().min(2).max(200),
 });
 
-const SupplierForm = () => {
+const MaterialForm = () => {
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+
+  useEffect(() => {
+    fetch("/api/supplier")
+      .then((res) => res.json())
+      .then((data) => setSuppliers(data));
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      contact: "",
-      address: "",
+      category: "",
+      supplier: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const addSupplier = async () => {
-      const response = await fetch("/api/supplier", {
+    const addMaterial = async () => {
+      const res = await fetch("/api/materials", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-
-      if (response.ok) {
+      if (res.ok) {
         window.location.reload();
       } else {
-        console.error("Failed to add supplier");
+        console.error("Failed to add material");
       }
     };
-    addSupplier();
+    addMaterial();
   }
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -71,7 +84,7 @@ const SupplierForm = () => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Supplier/Merchant Name" {...field} />
+                <Input placeholder="Material Name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,26 +92,48 @@ const SupplierForm = () => {
         />
         <FormField
           control={form.control}
-          name="contact"
+          name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Contact</FormLabel>
-              <FormControl>
-                <Input placeholder="Contact Number" {...field} />
-              </FormControl>
+              <FormLabel>Supplier</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a verified email to display" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {materialsCategories.map((materialCategory) => (
+                    <SelectItem key={materialCategory} value={materialCategory}>
+                      {materialCategory}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="address"
+          name="supplier"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Address</FormLabel>
-              <FormControl>
-                <Input placeholder="Address/Landmark/Location" {...field} />
-              </FormControl>
+              <FormLabel>Supplier</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a verified email to display" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {suppliers.map((supplier) => (
+                    <SelectItem key={supplier.id} value={supplier.name}>
+                      {`SPP ${supplier.id} - ${supplier.name}`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -109,7 +144,7 @@ const SupplierForm = () => {
   );
 };
 
-export default function Supplier() {
+export default function Materials() {
   return (
     <div>
       <Drawer>
@@ -119,9 +154,9 @@ export default function Supplier() {
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle className="mb-6">New Supplier</DrawerTitle>
+            <DrawerTitle className="mb-6">New Material</DrawerTitle>
             <DrawerDescription>
-              <SupplierForm />
+              <MaterialForm />
             </DrawerDescription>
           </DrawerHeader>
         </DrawerContent>

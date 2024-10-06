@@ -10,6 +10,11 @@ export async function POST(request: Request) {
       name: body.name.toUpperCase(),
       category: body.category,
       material_id: id,
+      supplier: {
+        connect: {
+          name: body.supplier,
+        },
+      },
     },
   });
 
@@ -26,6 +31,9 @@ export async function GET() {
         material_id: "asc",
       },
     ],
+    include: {
+      supplier: true,
+    },
   });
   return new Response(JSON.stringify(materials));
 }

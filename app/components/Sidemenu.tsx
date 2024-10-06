@@ -9,6 +9,8 @@ import NavItem from "./NavItem";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
+import { BrickWall, Warehouse } from "lucide-react";
+
 export default function Sidemenu() {
   return (
     <div className="w-56 p-4  flex-col justify-between hidden lg:flex">
@@ -35,11 +37,28 @@ export default function Sidemenu() {
           <div className="mt-6">
             <p className="text-sm font-semibold">Materials</p>
             <ul>
-              <NavItem href={"/dashboard/materials"} icon={<GiWoodCabin />}>
+              <NavItem
+                href={"/dashboard/materials"}
+                icon={<BrickWall className="w-4 h-4" />}
+              >
                 Dashboard
               </NavItem>
-              <NavItem href={"/attendance"} icon={<GiWoodPile />}>
-                Attendance
+              <NavItem
+                href={"/dashboard/materials/projects"}
+                icon={<GiWoodPile />}
+              >
+                Project Materials
+              </NavItem>
+            </ul>
+          </div>
+          <div className="mt-6">
+            <p className="text-sm font-semibold">Projects</p>
+            <ul>
+              <NavItem
+                href={"/dashboard/projects"}
+                icon={<Warehouse className="w-4 h-4" />}
+              >
+                Dashboard
               </NavItem>
             </ul>
           </div>
