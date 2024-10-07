@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { SquarePlus } from "lucide-react";
 import {
@@ -29,8 +30,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { useEffect, useState } from "react";
-import { Supplier } from "@prisma/client";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -45,32 +44,26 @@ const formSchema = z.object({
 const ProjectForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      address: "",
-      alias: "",
-      owner_name: "",
-      startDate: new Date(),
-    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // const addProject = async () => {
-    //   const res = await fetch("/api/materials", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(values),
-    //   });
-    //   if (res.ok) {
-    //     window.location.reload();
-    //   } else {
-    //     console.error("Failed to add material");
-    //   }
-    // };
-    // addProject();
-    console.log(values);
+    const addProject = async () => {
+      const res = await fetch("/api/project", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        console.error("Failed to add project");
+      }
+    };
+    addProject();
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

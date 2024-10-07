@@ -95,11 +95,11 @@ const MaterialForm = () => {
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Supplier</FormLabel>
+              <FormLabel>Category</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
+                    <SelectValue placeholder="Select a material category" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -123,7 +123,7 @@ const MaterialForm = () => {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
+                    <SelectValue placeholder="Select a supplier" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
