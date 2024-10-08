@@ -112,5 +112,7 @@ model ProjectMaterial {
   project    Project  @relation(fields: [projectId], references: [id])
   materialId Int
   projectId  Int
+  quantity   Int
+  totalPrice Int
   date       DateTime @default(now())
 }
