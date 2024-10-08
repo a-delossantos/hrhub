@@ -99,8 +99,8 @@ model Material {
 model Project {
   id              Int               @id @default(autoincrement())
   address         String
-  alias           String?
-  owner_name      String?
+  alias           String            @unique
+  owner_name      String
   projectMaterial ProjectMaterial[]
   startDate       DateTime?
 }

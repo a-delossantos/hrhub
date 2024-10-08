@@ -44,8 +44,8 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
 const formSchema = z.object({
-  material: z.string().min(2).max(50),
-  project: z.string().min(2).max(50),
+  material: z.string(),
+  project: z.string(),
   price: z.number(),
   quantity: z.number(),
   date: z.date(),
@@ -95,17 +95,13 @@ const MaterialForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      material: "",
-      project: "",
-      price: 0,
-      quantity: 0,
       date: new Date(),
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const addProjectMaterial = async () => {
-      const res = await fetch("/api/materials", {
+      const res = await fetch("/api/project/material", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +133,7 @@ const MaterialForm = () => {
                 </FormControl>
                 <SelectContent>
                   {projects.map((project) => (
-                    <SelectItem key={project.id} value={project.id + ""}>
+                    <SelectItem key={project.id} value={project.id.toString()}>
                       {project.alias} - {project.address}
                     </SelectItem>
                   ))}
@@ -149,7 +145,7 @@ const MaterialForm = () => {
         />
         <FormField
           control={form.control}
-          name="project"
+          name="material"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Material</FormLabel>
@@ -166,6 +162,7 @@ const MaterialForm = () => {
                       onChange={(e) => setSeachInput(e.target.value)}
                     />
                   </div>
+
                   {searchInput.length === 0 ? (
                     materials.map((material) => (
                       <SelectItem key={material.id} value={material.id + ""}>
@@ -174,7 +171,7 @@ const MaterialForm = () => {
                     ))
                   ) : searchInput.length > 0 && filteredMaterials.length > 0 ? (
                     filteredMaterials.map((material) => (
-                      <SelectItem key={material.id} value={material.id + ""}>
+                      <SelectItem key={material.id} value={material.name + ""}>
                         {material.name} - {material.supplier.name}
                       </SelectItem>
                     ))
@@ -194,7 +191,11 @@ const MaterialForm = () => {
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
-                <Input placeholder="Price per unit" {...field} />
+                <Input
+                  placeholder="Price per unit"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -207,7 +208,11 @@ const MaterialForm = () => {
             <FormItem>
               <FormLabel>Quantity</FormLabel>
               <FormControl>
-                <Input placeholder="Matierial Quantity" {...field} />
+                <Input
+                  placeholder="Matierial Quantity"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -254,7 +259,6 @@ const MaterialForm = () => {
             </FormItem>
           )}
         />
-
         <Button type="submit">Submit</Button>
       </form>
     </Form>
